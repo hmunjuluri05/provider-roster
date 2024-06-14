@@ -1,6 +1,7 @@
 ### Scala ###
 *.class
 *.log
+.DS_Store
 
 # VSCode/Metals
 .bloop
@@ -13,6 +14,7 @@ metals.sbt
 
 # Scala build output
 target/
+.idea
 
 # Test output
 test_output/
@@ -21,3 +23,6 @@ test_processed/
 
 # Private stuff
 private/
+
+#output
+/output
