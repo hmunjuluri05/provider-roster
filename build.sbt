@@ -17,16 +17,30 @@ assembly / assemblyMergeStrategy := {
   case PathList("META-INF", "DUMMY.RSA") => MergeStrategy.discard
     case x => MergeStrategy.first
 }
-  assembly / assemblyOption := (assembly / assemblyOption).value
+assembly / assemblyOption := (assembly / assemblyOption).value
 .copy(includeScala = false)
-  assembly / test := {}
+assembly / test := {}
 
-  // Dependencies
-  val sparkVersion = "3.1.1"
+// Dependencies
+val sparkVersion = "3.1.1"
 
-  libraryDependencies ++= Seq(
+
+lazy val local = (project in file("."))
+  .settings(
+    libraryDependencies ++= Seq(
+      "org.apache.spark" %% "spark-core" % sparkVersion,
+      "org.apache.spark" %% "spark-sql" % sparkVersion,
+      "com.github.mrpowers" %% "spark-daria" % "1.0.0",
+      "com.github.mrpowers" %% "spark-fast-tests" % "1.0.0" % Test,
+      "org.scalatest" %% "scalatest" % "3.2.9" % Test)
+  )
+
+lazy val production = (project in file("."))
+  .settings(
+    libraryDependencies ++= Seq(
       "org.apache.spark" %% "spark-core" % sparkVersion % "provided",
       "org.apache.spark" %% "spark-sql" % sparkVersion % "provided",
       "com.github.mrpowers" %% "spark-daria" % "1.0.0",
       "com.github.mrpowers" %% "spark-fast-tests" % "1.0.0" % Test,
       "org.scalatest" %% "scalatest" % "3.2.9" % Test)
+  )
